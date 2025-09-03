@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - Django Game</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- CSRF token for AJAX requests -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="game-header">
+            <h1>🎮 Rock Paper Scissors</h1>
+            <div class="score-display">
+                <div class="score-item">
+                    <span class="score-label">Player</span>
+                    <span class="score-value" id="playerScore">{{ player_score }}</span>
+                </div>
+                <div class="score-divider">-</div>
+                <div class="score-item">
+                    <span class="score-label">Computer</span>
+                    <span class="score-value" id="computerScore">{{ computer_score }}</span>
+                </div>
+                <div class="score-divider">-</div>
+                <div class="score-item">
+                    <span class="score-label">Draws</span>
+                    <span class="score-value" id="drawScore">{{ draw_score }}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <main class="game-main">
+            <div class="game-choices">
+                <h2>Choose your weapon:</h2>
+                <div class="choice-buttons">
+                    <button class="choice-btn" data-choice="rock" id="rockBtn">
+                        <span class="choice-emoji">🗿</span>
+                        <span class="choice-name">Rock</span>
+                    </button>
+                    <button class="choice-btn" data-choice="paper" id="paperBtn">
+                        <span class="choice-emoji">📄</span>
+                        <span class="choice-name">Paper</span>
+                    </button>
+                    <button class="choice-btn" data-choice="scissors" id="scissorsBtn">
+                        <span class="choice-emoji">✂️</span>
+                        <span class="choice-name">Scissors</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Battle Display Area -->
+            <div class="battle-area" id="battleArea" style="display: none;">
+                <div class="battle-display">
+                    <div class="player-battle">
+                        <h3>You</h3>
+                        <div class="battle-choice" id="playerBattleChoice">
+                            <span class="battle-emoji">❓</span>
+                        </div>
+                    </div>
+
+                    <div class="battle-vs">
+                        <span class="vs-text">VS</span>
+                    </div>
+
+                    <div class="computer-battle">
+                        <h3>Computer</h3>
+                        <div class="battle-choice" id="computerBattleChoice">
+                            <span class="battle-emoji">❓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-display" id="resultDisplay">
+                    <h2 id="resultText">Choose your weapon!</h2>
+                    <p id="resultDescription"></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Game History Section -->
+        <section class="game-history">
+            <h3>Recent Games</h3>
+            <div class="history-container" id="historyContainer">
+                {% if game_history %}
+                    {% for game in game_history reversed %}
+                        <div class="history-item result-{{ game.result }}">
+                            <div class="history-round">Round {{ game.round_number }}</div>
+                            <div class="history-choices">
+                                <span class="history-choice">
+                                    {% if game.player_choice == 'rock' %}🗿{% elif game.player_choice == 'paper' %}📄{% else %}✂️{% endif %}
+                                </span>
+                                <span class="history-vs">vs</span>
+                                <span class="history-choice">
+                                    {% if game.computer_choice == 'rock' %}🗿{% elif game.computer_choice == 'paper' %}📄{% else %}✂️{% endif %}
+                                </span>
+                            </div>
+                            <div class="history-result">
+                                {% if game.result == 'win' %}You Won!
+                                {% elif game.result == 'lose' %}You Lost
+                                {% else %}Draw{% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-history">No games played yet. Start playing to see your history!</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Reset Game Button -->
+        <div class="game-controls">
+            <button class="reset-btn" id="resetBtn">
+                <span class="reset-icon">🔄</span>
+                Reset Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">⚡</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/game.js' %}"></script>
+</body>
+</html>
