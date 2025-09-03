@@ -2,34 +2,6 @@
 
 A beautiful, full-featured Rock-Paper-Scissors game built with Django 4.x and modern frontend technologies.
 
-## Features ✨
-
-### Backend (Django)
-- **Django 4.x** project with clean app structure
-- **Session-based storage** (no database models needed)
-- **AJAX API endpoints** for game moves and reset functionality
-- **Comprehensive game logic** with proper win/lose/draw detection
-- **Error handling** and validation
-- **Unit tests** for game logic and views
-
-### Frontend (Modern Web Technologies)
-- **Beautiful responsive UI** with CSS Grid/Flexbox
-- **Smooth animations** and transitions
-- **Mobile-first responsive design**
-- **Real-time score tracking**
-- **Game history** (last 10 games)
-- **AJAX interactions** without page reloads
-- **Loading states** and user feedback
-- **Toast notifications** for user actions
-
-### Game Features
-- Choose between Rock (🗿), Paper (📄), or Scissors (✂️)
-- Animated battle sequences
-- Real-time score tracking (Player vs Computer vs Draws)
-- Session-based game history
-- Reset game functionality
-- Responsive design for all devices
-
 ## Installation & Setup 🚀
 
 ### Prerequisites
