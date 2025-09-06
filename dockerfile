@@ -1,20 +1,25 @@
-FROM python:3.10-slim
+# Use a Python base image
+FROM python:3.11-slim
 
-ENV PYTHONUNBUFFERED=1 \ 
-    PYTHONDONTWRITEBYTECODE=1
-
+# Set a working directory
 WORKDIR /app
 
+# Copy your requirements file (or the whole project)
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies and create a virtual environment
+RUN python -m venv /venv && \
+    /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install -r requirements.txt
 
+# Set the virtual environment's bin directory in PATH
+ENV PATH="/venv/bin:$PATH"
+
+# Copy the rest of the project files
 COPY . .
 
-RUN python -m venv venv
+# Run Django migrations (this will use /venv/bin/python because of PATH)
+RUN python manage.py makemigrations
 
-RUN Source /venv/bin/activate
-
-EXPOSE 8000
-
+# Default command to run the Django app (again uses /venv/bin/python because of PATH)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
