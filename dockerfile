@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN python -m venv /venv
+RUN python -m venv /venv && \
     /venv/bin/pip install -r requirements.txt
 
 ENV PATH="/venv/bin:$PATH"
