@@ -13,7 +13,7 @@ COPY . .
 
 RUN python -m venv venv
 
-RUN Source/venv/bin/activate
+RUN Source /venv/bin/activate
 
 EXPOSE 8000
 
